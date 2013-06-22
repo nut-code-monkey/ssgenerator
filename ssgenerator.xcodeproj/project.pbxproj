@@ -253,10 +253,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C5A0D4D845104AE3A3A0F083 /* Pods.xcconfig */;
 			buildSettings = {
-				DSTROOT = .;
+				DSTROOT = /;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ssgenerator/ssgenerator-Prefix.pch";
-				INSTALL_PATH = /ust/local/bin;
+				INSTALL_PATH = /usr/local/bin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = NO;
 			};
@@ -266,10 +266,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C5A0D4D845104AE3A3A0F083 /* Pods.xcconfig */;
 			buildSettings = {
-				DSTROOT = .;
+				DSTROOT = /;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ssgenerator/ssgenerator-Prefix.pch";
-				INSTALL_PATH = /ust/local/bin;
+				INSTALL_PATH = /usr/local/bin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
