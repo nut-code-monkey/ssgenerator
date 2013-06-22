@@ -9,32 +9,17 @@
 /* Begin PBXBuildFile section */
 		5044B96A1775B3D000B99E02 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5044B9691775B3D000B99E02 /* Foundation.framework */; };
 		5044B96D1775B3D000B99E02 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5044B96C1775B3D000B99E02 /* main.m */; };
-		5044B9711775B3D000B99E02 /* ssgenerator.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5044B9701775B3D000B99E02 /* ssgenerator.1 */; };
 		5044B97E1775B55300B99E02 /* SSGController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5044B9791775B55300B99E02 /* SSGController.m */; };
 		5044B97F1775B55300B99E02 /* SSGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 5044B97B1775B55300B99E02 /* SSGenerator.m */; };
 		5044B9801775B55300B99E02 /* SSGParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5044B97D1775B55300B99E02 /* SSGParser.m */; };
 		CA781207BE2A46A9A31BE0EA /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8690947873F44645A4494CCF /* libPods.a */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		5044B9641775B3D000B99E02 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
-			files = (
-				5044B9711775B3D000B99E02 /* ssgenerator.1 in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
 		5044B9661775B3D000B99E02 /* ssgenerator */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ssgenerator; sourceTree = BUILT_PRODUCTS_DIR; };
 		5044B9691775B3D000B99E02 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5044B96C1775B3D000B99E02 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5044B96F1775B3D000B99E02 /* ssgenerator-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ssgenerator-Prefix.pch"; sourceTree = "<group>"; };
-		5044B9701775B3D000B99E02 /* ssgenerator.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = ssgenerator.1; sourceTree = "<group>"; };
 		5044B9771775B43A00B99E02 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		5044B9781775B55300B99E02 /* SSGController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSGController.h; sourceTree = "<group>"; };
 		5044B9791775B55300B99E02 /* SSGController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSGController.m; sourceTree = "<group>"; };
@@ -99,7 +84,6 @@
 				5044B97C1775B55300B99E02 /* SSGParser.h */,
 				5044B97D1775B55300B99E02 /* SSGParser.m */,
 				5044B96C1775B3D000B99E02 /* main.m */,
-				5044B9701775B3D000B99E02 /* ssgenerator.1 */,
 				5044B96E1775B3D000B99E02 /* Supporting Files */,
 			);
 			path = ssgenerator;
@@ -123,7 +107,6 @@
 				414BEBAE0900413691DD42C3 /* Check Pods Manifest.lock */,
 				5044B9621775B3D000B99E02 /* Sources */,
 				5044B9631775B3D000B99E02 /* Frameworks */,
-				5044B9641775B3D000B99E02 /* CopyFiles */,
 				5D53A7774AF94DFC82B53C84 /* Copy Pods Resources */,
 			);
 			buildRules = (
@@ -270,9 +253,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C5A0D4D845104AE3A3A0F083 /* Pods.xcconfig */;
 			buildSettings = {
+				DSTROOT = .;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ssgenerator/ssgenerator-Prefix.pch";
+				INSTALL_PATH = /ust/local/bin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = NO;
 			};
 			name = Debug;
 		};
@@ -280,8 +266,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C5A0D4D845104AE3A3A0F083 /* Pods.xcconfig */;
 			buildSettings = {
+				DSTROOT = .;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ssgenerator/ssgenerator-Prefix.pch";
+				INSTALL_PATH = /ust/local/bin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
