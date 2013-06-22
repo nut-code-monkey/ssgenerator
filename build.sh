@@ -1,0 +1,1 @@
+xcodebuild -workspace ssgenerator.xcworkspace -scheme ssgenerator -configuration Release

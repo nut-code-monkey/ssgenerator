@@ -42,6 +42,7 @@
 		5044B97B1775B55300B99E02 /* SSGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSGenerator.m; sourceTree = "<group>"; };
 		5044B97C1775B55300B99E02 /* SSGParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSGParser.h; sourceTree = "<group>"; };
 		5044B97D1775B55300B99E02 /* SSGParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSGParser.m; sourceTree = "<group>"; };
+		5044B9811775B5FF00B99E02 /* build.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = build.sh; sourceTree = "<group>"; };
 		8690947873F44645A4494CCF /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5A0D4D845104AE3A3A0F083 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -62,6 +63,7 @@
 		5044B95D1775B3D000B99E02 = {
 			isa = PBXGroup;
 			children = (
+				5044B9811775B5FF00B99E02 /* build.sh */,
 				5044B9771775B43A00B99E02 /* Podfile */,
 				5044B96B1775B3D000B99E02 /* ssgenerator */,
 				5044B9681775B3D000B99E02 /* Frameworks */,
