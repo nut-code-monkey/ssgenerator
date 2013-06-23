@@ -10,9 +10,15 @@
 
 @interface SSGController : NSObject
 
-@property (strong, nonatomic) NSString* className;
-@property (strong, nonatomic) NSMutableSet* segues;
+@property (strong, nonatomic) NSString* storyboardElementName;
+@property (strong, nonatomic) NSString* storyboardID;
+@property (strong, nonatomic) NSString* customClass;
 
-+(instancetype)controllerWithClass:( NSString* )className segue:( NSString* )segueName;
+@property (strong, nonatomic) NSMutableSet* segues;
+@property (strong, nonatomic) NSMutableSet* cells;
+
++(instancetype)controllerWithStoryboardElementName:( NSString* )name
+                                      storyboardID:( NSString* )storyboardID
+                                        customClass:( NSString* )customClass;
 
 @end

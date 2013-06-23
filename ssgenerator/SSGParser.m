@@ -7,6 +7,7 @@
 //
 
 #import "SSGParser.h"
+#import "SSGController.h"
 
 @interface SSGParser () <NSXMLParserDelegate>
 
@@ -24,9 +25,8 @@
     {
         self.parser = [[NSXMLParser alloc] initWithData:data];
         self.parser.delegate = self;
-        self.destinations = [NSMutableDictionary dictionary];
-        self.segues = [NSMutableSet set];
         self.controllersStack = [NSMutableArray array];
+        self.controllers = [NSMutableArray array];
     }
     return self;
 }
@@ -45,22 +45,8 @@
         *error = [parser.parser parserError];
         return nil;
     }
+    
     return parser;
-}
-
-+(NSString *)containerClassForElementName:(NSString *)elementName
-{
-    return @{
-              @"viewController": @"UIViewController",
-              @"tableViewController" : @"UITableViewController",
-              @"navigationController" : @"UINavigationController"
-            }
-             [elementName];
-}
-
--(BOOL)isContrioller:( NSString* )elementName
-{
-    return [self.class containerClassForElementName:elementName] != 0;
 }
 
 - (void) parser:(NSXMLParser *)parser
@@ -71,29 +57,37 @@ didStartElement:(NSString *)elementName
 {
     if ( [attributeDict[@"sceneMemberID"] isEqual:@"viewController"] )
     {
-        NSMutableDictionary* attributes = [attributeDict mutableCopy];
-        id idString = attributeDict[@"id"];
-        
-        self.destinations[ idString ] = attributes;
-        
-        [self.controllersStack addObject:attributes];
+        SSGController* controller = [SSGController controllerWithStoryboardElementName:elementName
+                                                                          storyboardID:attributeDict[@"id"]
+                                                                           customClass:attributeDict[@"customClass"]];
+        [self.controllers addObject:controller];
+        [self.controllersStack addObject:controller];
     }
     
-    if ( [elementName isEqual:@"segue"] )
+    if ( [elementName isEqual:@"segue"] && [attributeDict[@"identifier"] length] )
     {
-        NSMutableDictionary* attributes = [attributeDict mutableCopy];
-        if ( self.controllersStack.count )
+        SSGController* controller = [self.controllersStack lastObject];
+        if ( controller )
         {
-            attributes[@"sourceViewController"] = [self.controllersStack lastObject];
+            [controller.segues addObject:attributeDict[@"identifier"]];
         }
-
-        [self.segues addObject:attributes];
+    }
+    
+    if ( [elementName isEqual:@"tableViewCell"] && [attributeDict[@"reuseIdentifier"] length] )
+    {
+        SSGController* controller = [self.controllersStack lastObject];
+        
+        [controller.cells addObject:attributeDict[@"reuseIdentifier"]];
     }
 }
 
-- (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
+- (void)parser:(NSXMLParser *)parser
+ didEndElement:(NSString *)elementName
+  namespaceURI:(NSString *)namespaceURI
+ qualifiedName:(NSString *)qName
 {
-    if ( [self isContrioller:elementName] )
+    SSGController* controller = [self.controllersStack lastObject];
+    if ( [controller.storyboardElementName isEqual:elementName] )
     {
         [self.controllersStack removeLastObject];
     }

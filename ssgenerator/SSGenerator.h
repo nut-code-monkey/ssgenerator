@@ -10,6 +10,8 @@
 
 @interface SSGenerator : NSObject
 
+@property (strong, nonatomic) NSString* defaultControllerClass;
+
 +(instancetype)generatorForControllers:( NSArray* )controllers;
 
 -(NSError*)writeH:( NSString* )file;

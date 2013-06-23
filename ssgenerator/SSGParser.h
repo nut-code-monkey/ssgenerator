@@ -10,11 +10,8 @@
 
 @interface SSGParser : NSObject
 
-@property (strong, nonatomic) NSMutableDictionary* destinations;
-@property (strong, nonatomic) NSMutableSet* segues;
+@property (strong, nonatomic) NSMutableArray* controllers;
 
 +(instancetype)parserForStoryboard:( NSString* )storyboard error:( NSError*__autoreleasing* )error;
-
-+(NSString*)containerClassForElementName:( NSString* )elementName;
 
 @end

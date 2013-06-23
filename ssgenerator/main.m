@@ -9,14 +9,7 @@
 #import <Foundation/Foundation.h>
 
 #import "SSGParser.h"
-#import "SSGController.h"
 #import "SSGenerator.h"
-
-//#import "FSArgumentSignature.h"
-//#import "FSArgumentParser.h"
-//#import "FSArgumentPackage.h"
-//
-//#import "NSProcessInfo+FSArgumentParser.h"
 
 int main(int argc, const char * argv[])
 {
@@ -86,36 +79,9 @@ int main(int argc, const char * argv[])
             return EXIT_FAILURE;
         }
         
-        NSMutableDictionary* controllers = [NSMutableDictionary dictionary];
-        
-        for (NSDictionary* segue in parser.segues)
-        {
-            NSString* identifier = segue[@"identifier"];
-            if ( !identifier )
-                continue;
-            
-            NSDictionary* sourceViewController = segue[@"sourceViewController"];
-            
-            NSString* customClass = sourceViewController[@"customClass"];
-            if ( !customClass )
-            {
-                customClass = @"UIViewController";
-            }
-        
-            SSGController* controller = controllers[customClass];
-            if (!controller)
-            {
-                controllers[customClass] = [SSGController controllerWithClass:customClass segue:identifier];
-            }
-            else
-            {
-                [controller.segues addObject:identifier];
-            }
-        }
+        SSGenerator* generator = [SSGenerator generatorForControllers:parser.controllers];
     
-        SSGenerator* generator = [SSGenerator generatorForControllers:[controllers allValues]];
-    
-         error = [generator writeH:outputPath];
+        error = [generator writeH:outputPath];
         if ( error )
         {
             printf("%s", [[error localizedDescription] cStringUsingEncoding:NSUTF8StringEncoding]);

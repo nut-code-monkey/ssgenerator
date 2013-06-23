@@ -10,25 +10,32 @@
 
 @implementation SSGController
 
--(id)initWithClass:(NSString *)className segue:(NSString *)segueName
+-(instancetype)initWithStoryboardElementName:( NSString* )name
+                                storyboardID:( NSString* )storyboardID
+                                 customClass:( NSString* )customClass
 {
     self = [super init];
     if ( self )
     {
-        self.className = className;
-        self.segues = [NSMutableSet setWithObject:segueName];
+        self.storyboardID = storyboardID;
+        self.storyboardElementName = name;
+        self.customClass = customClass;
+        self.segues = [NSMutableSet set];
+        self.cells = [NSMutableSet set];
     }
     return self;
 }
 
-+(instancetype)controllerWithClass:(NSString *)className segue:(NSString *)segueName
++(instancetype)controllerWithStoryboardElementName:( NSString* )name
+                                      storyboardID:( NSString* )storyboardID
+                                       customClass:( NSString* )customClass
 {
-    return [[self alloc] initWithClass:className segue:segueName];
+    return [[self alloc] initWithStoryboardElementName:name storyboardID:storyboardID customClass:customClass];
 }
 
 -(NSString *)description
 {
-    return [NSString stringWithFormat:@"<%@ segues:%@>", self.className, self.segues];
+    return [NSString stringWithFormat:@"<%@ segues:%@>", self.customClass, self.segues];
 }
 
 @end
