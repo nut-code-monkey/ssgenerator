@@ -38,7 +38,7 @@
     return [[self alloc] initWithControllers:controllers];
 }
 
--(NSString*)seguesForControllerH:( SSGController* )controller defaultControllerType:( NSString* )defaultControllerType
+-(NSString*)seguesForControllerH:( SSGController* )controller
 {
     NSString* controllerSeguesType = [NSString stringWithFormat:@"%@StoryboardSegues", [self controllerClass:controller]];
 
@@ -53,8 +53,7 @@
                       , controllerSeguesType
                       , [segueLines componentsJoinedByString:@"\n"]
                       , controllerSeguesType];
-    
-    
+
     id category = [NSString stringWithFormat:@"\n"
                            "@interface %@ ( StoryboardSegues )\n"
                            "\n"
@@ -67,12 +66,10 @@
                            , controllerSeguesType
                            , controllerSeguesType];
 
-    
-    
     return [@[seguesTypedef, category] componentsJoinedByString:@"\n"];
 }
 
--(NSString*)cellsForControllerH:( SSGController* )controller defaultControllerType:( NSString* )defaultControllerType
+-(NSString*)cellsForControllerH:( SSGController* )controller
 {
     NSString* controllerCellsType = [NSString stringWithFormat:@"%@StoryboardCells", [self controllerClass:controller]];
     
@@ -100,8 +97,6 @@
                    , controllerCellsType
                    , controllerCellsType];
     
-    
-    
     return [@[seguesTypedef, category] componentsJoinedByString:@"\n"];
 }
 
@@ -118,16 +113,15 @@
         
         if ( controller.segues.count )
         {
-            [controllers addObject:[self seguesForControllerH:controller
-                                        defaultControllerType:self.defaultControllerClass]];
+            [controllers addObject:[self seguesForControllerH:controller]];
         }
         
         if ( controller.cells.count )
         {
-            [controllers addObject:[self cellsForControllerH:controller
-                                       defaultControllerType:self.defaultControllerClass]];
+            [controllers addObject:[self cellsForControllerH:controller]];
         }
     }
+
     NSString* hFile = [controllers componentsJoinedByString:@"\n\n"];
     
     NSError* error = nil;
@@ -139,7 +133,7 @@
     return error;
 }
 
--(NSString*)seguesForControllerM:( SSGController* )controller defaultControllerType:( NSString* )defaultControllerType
+-(NSString*)seguesForControllerM:( SSGController* )controller
 {
     NSString* controllerSeguesType = [NSString stringWithFormat:@"%@StoryboardSegues", [self controllerClass:controller]];
     
@@ -170,12 +164,11 @@
                           , controllerSeguesType
                           , controllerSeguesType
                           , controllerSeguesType];
-    
-    
+
     return [@[seguesTypedef ,category] componentsJoinedByString:@"\n\n"];
 }
 
--(NSString*)cellsForControllerM:( SSGController* )controller defaultControllerType:( NSString* )defaultControllerType
+-(NSString*)cellsForControllerM:( SSGController* )controller
 {
     NSString* controllerCellsType = [NSString stringWithFormat:@"%@StoryboardCells", [self controllerClass:controller]];
     
@@ -206,11 +199,9 @@
                           , controllerCellsType
                           , controllerCellsType
                           , controllerCellsType];
-    
-    
+
     return [@[seguesTypedef ,category] componentsJoinedByString:@"\n\n"];
 }
-
 
 -(NSError*)writeM:( NSString* )file
 {
@@ -221,14 +212,12 @@
     {
         if ( controller.segues.count )
         {
-            [controllers addObject:[self seguesForControllerM:controller
-                                        defaultControllerType:self.defaultControllerClass]];
+            [controllers addObject:[self seguesForControllerM:controller]];
         }
         
         if ( controller.cells.count )
         {
-            [controllers addObject:[self cellsForControllerM:controller
-                                       defaultControllerType:self.defaultControllerClass]];
+            [controllers addObject:[self cellsForControllerM:controller]];
         }
     }
 
@@ -242,6 +231,5 @@
     
     return error;
 }
-
 
 @end
