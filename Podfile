@@ -1,2 +1,0 @@
-platform :osx
-pod 'FSArgumentParser'

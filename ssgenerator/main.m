@@ -12,56 +12,69 @@
 #import "SSGController.h"
 #import "SSGenerator.h"
 
-#import "FSArgumentSignature.h"
-#import "FSArgumentParser.h"
-#import "FSArgumentPackage.h"
-
-#import "NSProcessInfo+FSArgumentParser.h"
+//#import "FSArgumentSignature.h"
+//#import "FSArgumentParser.h"
+//#import "FSArgumentPackage.h"
+//
+//#import "NSProcessInfo+FSArgumentParser.h"
 
 int main(int argc, const char * argv[])
 {
     @autoreleasepool
-    {    
-        NSString* path = [NSString stringWithFormat:@"%s", argv[0]];
-        
-        FSArgumentSignature
-        * appPath = [FSArgumentSignature argumentSignatureWithFormat:@"[%@]", path],
-        * outputFileSignature = [FSArgumentSignature argumentSignatureWithFormat:@"[-o --output]="],
-        * storyboardFileSignature = [FSArgumentSignature argumentSignatureWithFormat:@"[-s --storyboard]="],
-        * helpSignature = [FSArgumentSignature argumentSignatureWithFormat:@"[-h --help]"];
-        
-        NSArray* signatures = @[appPath, helpSignature, storyboardFileSignature, outputFileSignature];
-        
-        FSArgumentPackage * package = [[NSProcessInfo processInfo] fsargs_parseArgumentsWithSignatures:signatures];
-        
+    {
         void(^printHelp)() = ^()
         {
             NSURL* appUrl = [NSURL fileURLWithPath:[NSString stringWithUTF8String:argv[0]]];
+            const char* appName = [[appUrl lastPathComponent] cStringUsingEncoding:NSUTF8StringEncoding];
+            
             printf("usage:\n");
-            printf("   %s  [-h | --help] [-s |--storyboard] <storyboard_name> [-o | --output] <output_filename>\n", [[appUrl lastPathComponent] cStringUsingEncoding:NSUTF8StringEncoding]);
+            printf("   %s [-h | -help] [-s | -storyboard] <storyboard_name> [-o | -output] <output_filename>\n", appName);
         };
         
-        if ( [package unknownSwitches].count || [package uncapturedValues].count || [package countOfSignature:storyboardFileSignature] == 0 )
+        if ( argc == 1 ) // no params
         {
             printHelp();
             return EXIT_FAILURE;
         }
+
+        for (int i = 1; i < argc; ++i) // -h | -help
+        {
+            NSString* arg = [NSString stringWithUTF8String:argv[i]];
+            if ( [arg isEqual:@"-h"] || [arg isEqual:@"-help"] )
+            {
+                printHelp();
+                return EXIT_SUCCESS;
+            }
+        }
         
-        if ( [package countOfSignature:helpSignature] )
+        NSUserDefaults *args = [NSUserDefaults standardUserDefaults];
+        NSDictionary *parsedArguments = [args volatileDomainForName:NSArgumentDomain];
+        
+        NSString* storyboard = parsedArguments[@"s"];
+        if ( !storyboard )
+        {
+            storyboard = parsedArguments[@"storyboard"];
+        }
+        
+        if ( !storyboard )
         {
             printHelp();
-            return EXIT_SUCCESS;
+            return EXIT_FAILURE;
         }
     
-        NSURL* storyboardPath = [NSURL fileURLWithPath:[package firstObjectForSignature:storyboardFileSignature]];
+        NSURL* storyboardPath = [NSURL fileURLWithPath:storyboard];
         
         NSString* outputFilename = [[[storyboardPath lastPathComponent] stringByDeletingPathExtension] stringByAppendingString:@"Segues"];
         
         NSString* outputPath = [[[storyboardPath URLByDeletingLastPathComponent] URLByAppendingPathComponent:outputFilename] relativePath];
         
-        if ( [package countOfSignature:outputFileSignature] )
+        if ( parsedArguments[@"o"] )
         {
-            outputPath = [package firstObjectForSignature:outputFileSignature];
+            outputPath = parsedArguments[@"o"];  ;
+        }
+        else if ( parsedArguments[@"output"] )
+        {
+            outputPath = parsedArguments[@"output"];
         }
         
         NSError* error = nil;
