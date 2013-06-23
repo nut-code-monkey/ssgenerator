@@ -14,6 +14,8 @@
 @property (strong, nonatomic) NSXMLParser* parser;
 @property (strong, nonatomic) NSMutableArray* controllersStack;
 
+@property (strong, nonatomic) NSMutableDictionary* controllersByCustomClass;
+
 @end
 
 @implementation SSGParser
@@ -27,6 +29,7 @@
         self.parser.delegate = self;
         self.controllersStack = [NSMutableArray array];
         self.controllers = [NSMutableArray array];
+        self.controllersByCustomClass = [NSMutableDictionary dictionary];
     }
     return self;
 }
@@ -46,6 +49,8 @@
         return nil;
     }
     
+    parser.controllers = [parser.controllersByCustomClass allValues];
+    
     return parser;
 }
 
@@ -57,10 +62,22 @@ didStartElement:(NSString *)elementName
 {
     if ( [attributeDict[@"sceneMemberID"] isEqual:@"viewController"] )
     {
-        SSGController* controller = [SSGController controllerWithStoryboardElementName:elementName
-                                                                          storyboardID:attributeDict[@"id"]
-                                                                           customClass:attributeDict[@"customClass"]];
-        [self.controllers addObject:controller];
+        NSString* customClass = attributeDict[@"customClass"];
+        if ( !customClass )
+        {
+            customClass = @"< Default View Controller >";
+        }
+        
+        SSGController* controller = self.controllersByCustomClass[customClass];
+        
+        if ( !controller )
+        {
+            controller = [SSGController controllerWithStoryboardElementName:elementName
+                                                               storyboardID:attributeDict[@"id"]
+                                                                customClass:attributeDict[@"customClass"]];
+            self.controllersByCustomClass[customClass] = controller;
+        }
+
         [self.controllersStack addObject:controller];
     }
     

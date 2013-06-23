@@ -10,7 +10,7 @@
 
 @interface SSGParser : NSObject
 
-@property (strong, nonatomic) NSMutableArray* controllers;
+@property (strong, nonatomic) NSArray* controllers;
 
 +(instancetype)parserForStoryboard:( NSString* )storyboard error:( NSError*__autoreleasing* )error;
 
