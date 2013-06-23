@@ -62,11 +62,8 @@
                            "\n"
                            "+(struct %@)segues;\n"
                            "\n"
-                           "-(struct %@)segues;\n"
-                           "\n"
-                           @"@end\n\n"
+                           @"@end\n\n\n"
                            , [self controllerClass:controller]
-                           , controllerSeguesType
                            , controllerSeguesType
                            , controllerSeguesType];
 
@@ -98,11 +95,8 @@
                    "\n"
                    "+(struct %@)cells;\n"
                    "\n"
-                   "-(struct %@)cells;\n"
-                   "\n"
                    @"@end\n\n"
                    , [self controllerClass:controller]
-                   , controllerCellsType
                    , controllerCellsType
                    , controllerCellsType];
     
@@ -117,7 +111,7 @@
     
     for (SSGController* controller in self.controllers)
     {
-        if ( controller.customClass )
+        if ( controller.customClass && ( controller.segues.count || controller.cells.count ) )
         {
             [controllers addObject:[NSString stringWithFormat:@"#import \"%@.h\"\n\n", controller.customClass]];
         }
@@ -220,8 +214,7 @@
 
 -(NSError*)writeM:( NSString* )file
 {
-    NSString* import = [file lastPathComponent];
-    id header = [NSString stringWithFormat:@"#import \"\%@.h\"", import];
+    id header = [NSString stringWithFormat:@"#import \"\%@.h\"", [file lastPathComponent]];
 
     NSMutableArray* controllers = [NSMutableArray arrayWithObject:header];
     for (SSGController* controller in self.controllers)
