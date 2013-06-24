@@ -104,7 +104,7 @@
 {
     NSMutableArray* controllers = [NSMutableArray arrayWithObject:@"#import <UIKit/UIKit.h>\n\n"];
     
-    for (SSGController* controller in self.controllers)
+    for ( SSGController* controller in self.controllers )
     {
         if ( controller.customClass && ( controller.segues.count || controller.cells.count ) )
         {

@@ -13,7 +13,6 @@
 
 @property (strong, nonatomic) NSXMLParser* parser;
 @property (strong, nonatomic) NSMutableArray* controllersStack;
-
 @property (strong, nonatomic) NSMutableDictionary* controllersByCustomClass;
 
 @end

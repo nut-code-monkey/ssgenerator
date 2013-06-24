@@ -80,14 +80,14 @@ int main(int argc, const char * argv[])
         }
         
         SSGenerator* generator = [SSGenerator generatorForControllers:parser.controllers];
-    
+        
         error = [generator writeH:outputPath];
         if ( error )
         {
             printf("%s", [[error localizedDescription] cStringUsingEncoding:NSUTF8StringEncoding]);
             return EXIT_FAILURE;
         }
-    
+        
         printf("generate %s.h\n", [outputFilename cStringUsingEncoding:NSUTF8StringEncoding]);
         
         error =  [generator writeM:outputPath];

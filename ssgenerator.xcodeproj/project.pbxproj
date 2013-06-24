@@ -12,6 +12,7 @@
 		5044B97E1775B55300B99E02 /* SSGController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5044B9791775B55300B99E02 /* SSGController.m */; };
 		5044B97F1775B55300B99E02 /* SSGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 5044B97B1775B55300B99E02 /* SSGenerator.m */; };
 		5044B9801775B55300B99E02 /* SSGParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5044B97D1775B55300B99E02 /* SSGParser.m */; };
+		50F411C317786BA600F6DA16 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 50F411C217786BA600F6DA16 /* Makefile */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		5044B97C1775B55300B99E02 /* SSGParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSGParser.h; sourceTree = "<group>"; };
 		5044B97D1775B55300B99E02 /* SSGParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSGParser.m; sourceTree = "<group>"; };
 		5044B9811775B5FF00B99E02 /* build.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = build.sh; sourceTree = "<group>"; };
+		50F411C217786BA600F6DA16 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		8690947873F44645A4494CCF /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -44,6 +46,7 @@
 		5044B95D1775B3D000B99E02 = {
 			isa = PBXGroup;
 			children = (
+				50F411C217786BA600F6DA16 /* Makefile */,
 				5044B9811775B5FF00B99E02 /* build.sh */,
 				5044B96B1775B3D000B99E02 /* ssgenerator */,
 				5044B9681775B3D000B99E02 /* Frameworks */,
@@ -145,6 +148,7 @@
 				5044B97E1775B55300B99E02 /* SSGController.m in Sources */,
 				5044B97F1775B55300B99E02 /* SSGenerator.m in Sources */,
 				5044B9801775B55300B99E02 /* SSGParser.m in Sources */,
+				50F411C317786BA600F6DA16 /* Makefile in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
