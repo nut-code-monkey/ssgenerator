@@ -25,6 +25,7 @@
 		5044B97B1775B55300B99E02 /* SSGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSGenerator.m; sourceTree = "<group>"; };
 		5044B97C1775B55300B99E02 /* SSGParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSGParser.h; sourceTree = "<group>"; };
 		5044B97D1775B55300B99E02 /* SSGParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSGParser.m; sourceTree = "<group>"; };
+		508034B11778F7E800BD34AF /* ssgenerator.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = ssgenerator.rb; sourceTree = "<group>"; };
 		8690947873F44645A4494CCF /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -43,6 +44,7 @@
 		5044B95D1775B3D000B99E02 = {
 			isa = PBXGroup;
 			children = (
+				508034B11778F7E800BD34AF /* ssgenerator.rb */,
 				5044B96B1775B3D000B99E02 /* ssgenerator */,
 				5044B9681775B3D000B99E02 /* Frameworks */,
 				5044B9671775B3D000B99E02 /* Products */,
