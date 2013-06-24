@@ -211,10 +211,10 @@
 		5044B9751775B3D000B99E02 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				DSTROOT = .;
+				DSTROOT = /tmp/ssgenerator.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ssgenerator/ssgenerator-Prefix.pch";
-				INSTALL_PATH = bin;
+				INSTALL_PATH = /usr/local/bin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = NO;
 			};
@@ -223,10 +223,11 @@
 		5044B9761775B3D000B99E02 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				DSTROOT = .;
+				DSTROOT = /tmp/ssgenerator.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ssgenerator/ssgenerator-Prefix.pch";
-				INSTALL_PATH = bin;
+				INSTALL_PATH = /usr/local/bin;
+				PRODUCT_DEFINITION_PLIST = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
