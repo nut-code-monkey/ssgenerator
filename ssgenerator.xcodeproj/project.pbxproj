@@ -100,6 +100,7 @@
 			buildPhases = (
 				5044B9621775B3D000B99E02 /* Sources */,
 				5044B9631775B3D000B99E02 /* Frameworks */,
+				508034B31779FF6700BD34AF /* Make Package */,
 			);
 			buildRules = (
 			);
@@ -135,6 +136,23 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		508034B31779FF6700BD34AF /* Make Package */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Make Package";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "rm -Rf pack\nmkdir pack\ncp ssgenerator pack/ssgenerator\ncd pack\n\npkgbuild --identifier \"com.nut.code.monkey.pkg\"  --version 0.1.0 --root . --install-location /usr/local/bin ~/Desktop/ssgenerator.pkg";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		5044B9621775B3D000B99E02 /* Sources */ = {
@@ -213,10 +231,12 @@
 		5044B9751775B3D000B99E02 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CURRENT_PROJECT_VERSION = 0.1.0;
 				DSTROOT = /tmp/ssgenerator.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ssgenerator/ssgenerator-Prefix.pch";
 				INSTALL_PATH = /usr/local/bin;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = NO;
 			};
@@ -225,10 +245,12 @@
 		5044B9761775B3D000B99E02 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CURRENT_PROJECT_VERSION = 0.1.0;
 				DSTROOT = /tmp/ssgenerator.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ssgenerator/ssgenerator-Prefix.pch";
 				INSTALL_PATH = /usr/local/bin;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_DEFINITION_PLIST = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

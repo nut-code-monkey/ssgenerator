@@ -61,7 +61,7 @@ didStartElement:(NSString *)elementName
 {
     if ( [attributeDict[@"sceneMemberID"] isEqual:@"viewController"] )
     {
-        NSString* customClass = attributeDict[@"customClass"];
+        id customClass = attributeDict[@"customClass"];
         if ( !customClass )
         {
             customClass = @"< Default View Controller >";
@@ -77,6 +77,12 @@ didStartElement:(NSString *)elementName
             self.controllersByCustomClass[customClass] = controller;
         }
 
+        id storyboardIdentifier = attributeDict[@"storyboardIdentifier"];
+        if ( storyboardIdentifier )
+        {
+            [controller.storyboardIdentifiers addObject:storyboardIdentifier];
+        }
+        
         [self.controllersStack addObject:controller];
     }
     

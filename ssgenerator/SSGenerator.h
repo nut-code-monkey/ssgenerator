@@ -12,7 +12,7 @@
 
 @property (strong, nonatomic) NSString* defaultControllerClass;
 
-+(instancetype)generatorForControllers:( NSArray* )controllers;
++(instancetype)generatorForStoryboard:( NSString* )storyboard controllers:( NSArray* )controllers;
 
 -(NSError*)writeH:( NSString* )file;
 -(NSError*)writeM:( NSString* )file;

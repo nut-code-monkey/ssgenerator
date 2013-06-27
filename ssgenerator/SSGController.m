@@ -22,6 +22,7 @@
         self.customClass = customClass;
         self.segues = [NSMutableSet set];
         self.cells = [NSMutableSet set];
+        self.storyboardIdentifiers = [NSMutableSet set];
     }
     return self;
 }

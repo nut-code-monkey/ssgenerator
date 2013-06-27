@@ -11,19 +11,21 @@
 
 @interface SSGenerator ()
 
+@property (strong, nonatomic) NSString* storyboard;
 @property (strong, nonatomic) NSArray* controllers;
 
 @end
 
 @implementation SSGenerator
 
--(instancetype)initWithControllers:( NSArray* )controllers
+-(instancetype)initWithStoryboard:( NSString* )storyboard controllers:( NSArray* )controllers
 {
     self = [super init];
     if ( self )
     {
         self.controllers = controllers;
         self.defaultControllerClass = @"UIViewController";
+        self.storyboard = storyboard;
     }
     return self;
 }
@@ -33,10 +35,12 @@
     return controller.customClass ? controller.customClass : self.defaultControllerClass;
 }
 
-+(instancetype)generatorForControllers:( NSArray* )controllers
++(instancetype)generatorForStoryboard:( NSString* )storyboard controllers:( NSArray* )controllers
 {
-    return [[self alloc] initWithControllers:controllers];
+    return [[self alloc] initWithStoryboard:storyboard controllers:controllers];
 }
+
+#pragma mark - Lines for *.h file
 
 -(NSString*)seguesForControllerH:( SSGController* )controller
 {
@@ -100,13 +104,30 @@
     return [@[seguesTypedef, category] componentsJoinedByString:@"\n"];
 }
 
+-(NSString*)constructorsForControllerH:( SSGController* )controller
+{
+    NSMutableArray* constructors = [NSMutableArray arrayWithCapacity:controller.storyboardIdentifiers.count];
+    for ( NSString* storyboardIdentifier in controller.storyboardIdentifiers )
+    {
+        [constructors addObject:[NSString stringWithFormat:@"+(instancetype)controller%@;\n", storyboardIdentifier]];
+    }
+    
+    return [NSString stringWithFormat:@"@interface %@ ( StoryboardIdentifiers )\n\n"
+            "%@\n"
+            "@end\n"
+            , [self controllerClass:controller],
+            [constructors componentsJoinedByString:@"\n"]];
+}
+
+#pragma mark -
+
 -(NSError*)writeH:( NSString* )file
 {
     NSMutableArray* controllers = [NSMutableArray arrayWithObject:@"#import <UIKit/UIKit.h>\n\n"];
     
     for ( SSGController* controller in self.controllers )
     {
-        if ( controller.customClass && ( controller.segues.count || controller.cells.count ) )
+        if ( controller.customClass && ( controller.segues.count || controller.cells.count || controller.storyboardIdentifiers) )
         {
             [controllers addObject:[NSString stringWithFormat:@"#import \"%@.h\"\n\n", controller.customClass]];
         }
@@ -120,6 +141,11 @@
         {
             [controllers addObject:[self cellsForControllerH:controller]];
         }
+        
+        if ( controller.storyboardIdentifiers.count )
+        {
+            [controllers addObject:[self constructorsForControllerH:controller]];
+        }
     }
 
     NSString* hFile = [controllers componentsJoinedByString:@"\n\n"];
@@ -132,6 +158,8 @@
 
     return error;
 }
+
+#pragma mark - Lines for *.m file
 
 -(NSString*)seguesForControllerM:( SSGController* )controller
 {
@@ -203,6 +231,29 @@
     return [@[seguesTypedef ,category] componentsJoinedByString:@"\n\n"];
 }
 
+-(NSString*)constructorsForControllerM:( SSGController* )controller
+{
+    NSMutableArray* constructors = [NSMutableArray arrayWithCapacity:controller.storyboardIdentifiers.count];
+    for ( NSString* storyboardIdentifier in controller.storyboardIdentifiers)
+    {
+        [constructors addObject:[NSString stringWithFormat:@"+(instancetype)controller%@ {\n"
+                                 "   UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@\"%@\" bundle:nil];\n"
+                                 "   return [storyboard instantiateViewControllerWithIdentifier:@\"%@\"];\n"
+                                 "}\n"
+                                 , storyboardIdentifier
+                                 , self.storyboard
+                                 , storyboardIdentifier]];
+    }
+    
+    return [NSString stringWithFormat:@"@implementation %@ ( StoryboardIdentifiers )\n\n"
+            "%@"
+            "@end\n\n"
+            , [self controllerClass:controller]
+            , [constructors componentsJoinedByString:@"\n\n"]];
+}
+
+#pragma mark -
+
 -(NSError*)writeM:( NSString* )file
 {
     id header = [NSString stringWithFormat:@"#import \"\%@.h\"", [file lastPathComponent]];
@@ -218,6 +269,11 @@
         if ( controller.cells.count )
         {
             [controllers addObject:[self cellsForControllerM:controller]];
+        }
+        
+        if ( controller.storyboardIdentifiers.count )
+        {
+            [controllers addObject:[self constructorsForControllerM:controller]];
         }
     }
 

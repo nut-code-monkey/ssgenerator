@@ -14,6 +14,7 @@
 @property (strong, nonatomic) NSString* storyboardID;
 @property (strong, nonatomic) NSString* customClass;
 
+@property (strong, nonatomic) NSMutableSet* storyboardIdentifiers;
 @property (strong, nonatomic) NSMutableSet* segues;
 @property (strong, nonatomic) NSMutableSet* cells;
 

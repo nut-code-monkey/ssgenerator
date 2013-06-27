@@ -79,7 +79,8 @@ int main(int argc, const char * argv[])
             return EXIT_FAILURE;
         }
         
-        SSGenerator* generator = [SSGenerator generatorForControllers:parser.controllers];
+        SSGenerator* generator = [SSGenerator generatorForStoryboard:[storyboardPath lastPathComponent] 
+                                                         controllers:parser.controllers];
         
         error = [generator writeH:outputPath];
         if ( error )
