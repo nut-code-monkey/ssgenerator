@@ -11,43 +11,42 @@
 #import "SSGParser.h"
 #import "SSGenerator.h"
 
+NSString* firstNotNilParameter( NSString* first, NSString* second )
+{
+    return first ? first : second ? second : nil;
+}
+
 int main(int argc, const char * argv[])
 {
     @autoreleasepool
     {
+        NSArray* arguments = [[NSProcessInfo processInfo] arguments];
+        
         void(^printHelp)() = ^()
         {
-            NSURL* appUrl = [NSURL fileURLWithPath:[NSString stringWithUTF8String:argv[0]]];
+            NSURL* appUrl = [NSURL fileURLWithPath:arguments[0]];
             const char* appName = [[appUrl lastPathComponent] cStringUsingEncoding:NSUTF8StringEncoding];
             
             printf("usage:\n");
-            printf("   %s [-h | -help] [-s | -storyboard] <storyboard_name> [-o | -output] <output_filename>\n", appName);
+            printf("   %s -s <storyboard-name> [-o <output_filename>]\n\n", appName);
+            printf("   %s -storyboard <storyboard-name> [-output <output_filename>]\n", appName);
         };
         
-        if ( argc == 1 ) // no params
+        if ( arguments.count == 1 ) // no params
         {
             printHelp();
             return EXIT_FAILURE;
         }
 
-        for (int i = 1; i < argc; ++i) // -h | -help
+        if ( [arguments containsObject:@"-h"] || [arguments containsObject:@"-help"] )
         {
-            NSString* arg = [NSString stringWithUTF8String:argv[i]];
-            if ( [arg isEqual:@"-h"] || [arg isEqual:@"-help"] )
-            {
-                printHelp();
-                return EXIT_SUCCESS;
-            }
+            printHelp();
+            return EXIT_SUCCESS;
         }
         
-        NSUserDefaults *args = [NSUserDefaults standardUserDefaults];
-        NSDictionary *parsedArguments = [args volatileDomainForName:NSArgumentDomain];
+        NSDictionary* args = [[NSUserDefaults standardUserDefaults] volatileDomainForName:NSArgumentDomain];
         
-        NSString* storyboard = parsedArguments[@"s"];
-        if ( !storyboard )
-        {
-            storyboard = parsedArguments[@"storyboard"];
-        }
+        NSString* storyboard = firstNotNilParameter( args[@"s"], args[@"storyboard"] );
         
         if ( !storyboard )
         {
@@ -55,23 +54,17 @@ int main(int argc, const char * argv[])
             return EXIT_FAILURE;
         }
     
-        NSURL* storyboardPath = [NSURL fileURLWithPath:storyboard];
+        NSString* storyboardPath = [[NSURL fileURLWithPath:storyboard] relativePath];
         
-        NSString* outputFilename = [[[storyboardPath lastPathComponent] stringByDeletingPathExtension] stringByAppendingString:@"Segues"];
+        NSString* storyboardName = [[storyboardPath lastPathComponent] stringByDeletingPathExtension];
         
-        NSString* outputPath = [[[storyboardPath URLByDeletingLastPathComponent] URLByAppendingPathComponent:outputFilename] relativePath];
-        
-        if ( parsedArguments[@"o"] )
-        {
-            outputPath = parsedArguments[@"o"];  ;
-        }
-        else if ( parsedArguments[@"output"] )
-        {
-            outputPath = parsedArguments[@"output"];
-        }
+        NSString* defauldOutputFilename = [storyboardName stringByAppendingString:@"Segues"];
+
+        id defaultOutput = [[storyboardPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:defauldOutputFilename];
+        id outputPath = firstNotNilParameter(firstNotNilParameter(args[@"o"], args[@"output"]), defaultOutput);
         
         NSError* error = nil;
-        SSGParser* parser = [SSGParser parserForStoryboard:[storyboardPath relativePath] error:&error];
+        SSGParser* parser = [SSGParser parserForStoryboard:storyboardPath error:&error];
         
         if ( error )
         {
@@ -89,7 +82,7 @@ int main(int argc, const char * argv[])
             return EXIT_FAILURE;
         }
         
-        printf("generate %s.h\n", [outputFilename cStringUsingEncoding:NSUTF8StringEncoding]);
+        printf("generate %s.h\n", [defauldOutputFilename cStringUsingEncoding:NSUTF8StringEncoding]);
         
         error =  [generator writeM:outputPath];
         if ( error )
@@ -98,8 +91,7 @@ int main(int argc, const char * argv[])
             return EXIT_FAILURE;
         }
         
-        printf("generate %s.m\n", [outputFilename cStringUsingEncoding:NSUTF8StringEncoding]);
+        printf("generate %s.m\n", [defauldOutputFilename cStringUsingEncoding:NSUTF8StringEncoding]);
     }
     return EXIT_SUCCESS;
 }
-
