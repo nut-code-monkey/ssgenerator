@@ -16,6 +16,7 @@
 
 /* Begin PBXFileReference section */
 		50314E96177DCF7300830FA0 /* build.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = build.sh; sourceTree = "<group>"; };
+		50314E9C177DEEE600830FA0 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		5044B9661775B3D000B99E02 /* ssgenerator */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ssgenerator; sourceTree = BUILT_PRODUCTS_DIR; };
 		5044B9691775B3D000B99E02 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5044B96C1775B3D000B99E02 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -45,6 +46,7 @@
 		5044B95D1775B3D000B99E02 = {
 			isa = PBXGroup;
 			children = (
+				50314E9C177DEEE600830FA0 /* README.md */,
 				50314E96177DCF7300830FA0 /* build.sh */,
 				508034B11778F7E800BD34AF /* ssgenerator.rb */,
 				5044B96B1775B3D000B99E02 /* ssgenerator */,
