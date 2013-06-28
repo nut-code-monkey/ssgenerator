@@ -43,10 +43,13 @@ Prepare Project
 ---------------
 
 Go to Troject -> Targets -> Add Build Phase -> Add Run Script:
+
 ![Add run script](https://bitbucket.org/nut_code_monkey/ssgenerator/downloads/add_run_script.png "Add run script")
 
 Then insert sctipt:
+
 ![Generator script](https://bitbucket.org/nut_code_monkey/ssgenerator/downloads/generator_script.png "Generator script")
+
 ```bash 
 ssgenerator -s Path/To/Storyboard.storyboard
 ```
