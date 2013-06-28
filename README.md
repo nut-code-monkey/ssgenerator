@@ -37,16 +37,16 @@ id controller = [MyViewController controllerMyViewController];
 Insall
 ------
 
-Download [ssgenerator.pkg](https://github.com/nut-code-monkey/ssgenerator/ssgenerator.pkg) and install.
+Download [ssgenerator.pkg](https://bitbucket.org/nut_code_monkey/ssgenerator/downloads/ssgenerator.pkg) and install.
 
 Prepare Project
 ---------------
 
 Go to Troject -> Targets -> Add Build Phase -> Add Run Script:
-![Add run script](/img/add_run_script.png "Add run script")
+![Add run script](https://bitbucket.org/nut_code_monkey/ssgenerator/downloads/add_run_script.png "Add run script")
 
 Then insert sctipt:
-![Generator script](/img/generator_script.png "Generator script")
+![Generator script](https://bitbucket.org/nut_code_monkey/ssgenerator/downloads/generator_script.png "Generator script")
 ```bash 
 ssgenerator -s Path/To/Storyboard.storyboard
 ```
