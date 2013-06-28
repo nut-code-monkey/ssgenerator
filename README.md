@@ -1,7 +1,7 @@
 Storyboard segue generator
 ==========================
 
-*Generate string constant for any segues with identifier and now you can use
+* Generate string constant for any segues with identifier and now you can use
 ```
 [self performSegueWithIdentifier:self.segues.MySegue sender:nil]
 ```
@@ -21,7 +21,7 @@ instead
        ...
 }
 ```
-*Gnerate string constant for TableViewCells with identifiers. You can use
+* Gnerate string constant for TableViewCells with identifiers. You can use
 ```
 [self.tableView dequeueReusableCellWithIdentifier:self.cells.myTableViewCell];
 ```
@@ -29,7 +29,7 @@ instead
 [self.tableView dequeueReusableCellWithIdentifier:@"myTableViewCell"];
 ```
 
-*Generate convenience constructors for view controller with Storyboard ID:
+* Generate convenience constructors for view controller with Storyboard ID:
 ```
 id controller = [MyViewController controllerMyViewController];
 ```
