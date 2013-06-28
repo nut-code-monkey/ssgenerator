@@ -127,7 +127,7 @@
     
     for ( SSGController* controller in self.controllers )
     {
-        if ( controller.customClass && ( controller.segues.count || controller.cells.count || controller.storyboardIdentifiers) )
+        if ( controller.customClass && ( controller.segues.count || controller.cells.count || controller.storyboardIdentifiers.count) )
         {
             [controllers addObject:[NSString stringWithFormat:@"#import \"%@.h\"\n\n", controller.customClass]];
         }

@@ -15,6 +15,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		50314E96177DCF7300830FA0 /* build.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = build.sh; sourceTree = "<group>"; };
 		5044B9661775B3D000B99E02 /* ssgenerator */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ssgenerator; sourceTree = BUILT_PRODUCTS_DIR; };
 		5044B9691775B3D000B99E02 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5044B96C1775B3D000B99E02 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -44,6 +45,7 @@
 		5044B95D1775B3D000B99E02 = {
 			isa = PBXGroup;
 			children = (
+				50314E96177DCF7300830FA0 /* build.sh */,
 				508034B11778F7E800BD34AF /* ssgenerator.rb */,
 				5044B96B1775B3D000B99E02 /* ssgenerator */,
 				5044B9681775B3D000B99E02 /* Frameworks */,
@@ -150,7 +152,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "rm -Rf pack\nmkdir pack\ncp ssgenerator pack/ssgenerator\ncd pack\n\npkgbuild --identifier \"com.nut.code.monkey.pkg\"  --version 0.1.0 --root . --install-location /usr/local/bin ~/Desktop/ssgenerator.pkg";
+			shellScript = "rm -rf $BUILT_PRODUCTS_DIR/package\nmkdir $BUILT_PRODUCTS_DIR/package\n\ncp $BUILT_PRODUCTS_DIR/$EXECUTABLE_NAME $BUILT_PRODUCTS_DIR/package/$EXECUTABLE_NAME\n\npkgbuild --identifier \"com.nut.code.monkey.pkg\" --version $CURRENT_PROJECT_VERSION --root $BUILT_PRODUCTS_DIR/package/ --install-location /usr/local/bin $PROJECT_DIR/$CONFIGURATION-$EXECUTABLE_NAME.pkg";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -196,7 +198,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
@@ -216,14 +218,14 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -233,6 +235,7 @@
 			buildSettings = {
 				CURRENT_PROJECT_VERSION = 0.1.0;
 				DSTROOT = /tmp/ssgenerator.dst;
+				GCC_CHAR_IS_UNSIGNED_CHAR = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ssgenerator/ssgenerator-Prefix.pch";
 				INSTALL_PATH = /usr/local/bin;
@@ -246,7 +249,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CURRENT_PROJECT_VERSION = 0.1.0;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DSTROOT = /tmp/ssgenerator.dst;
+				GCC_CHAR_IS_UNSIGNED_CHAR = YES;
+				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ssgenerator/ssgenerator-Prefix.pch";
 				INSTALL_PATH = /usr/local/bin;
