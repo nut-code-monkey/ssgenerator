@@ -20,8 +20,8 @@
         self.storyboardID = storyboardID;
         self.storyboardElementName = name;
         self.customClass = customClass;
-        self.segues = [NSMutableSet set];
-        self.cells = [NSMutableSet set];
+        self.segue = [NSMutableSet set];
+        self.cell = [NSMutableSet set];
         self.storyboardIdentifiers = [NSMutableSet set];
     }
     return self;
@@ -36,7 +36,7 @@
 
 -(NSString *)description
 {
-    return [NSString stringWithFormat:@"<%@ segues:%@>", self.customClass, self.segues];
+    return [NSString stringWithFormat:@"<%@ segue:%@>", self.customClass, self.segue];
 }
 
 @end

@@ -1,29 +1,29 @@
 Storyboard segue generator
 ==========================
 
-* Generate string constant for any segues with identifier and now you can use
+* Generate string constant for any segue with identifier and now you can use
 ```
-[self performSegueWithIdentifier:self.segues.MySegue sender:nil]
+[self performSegueWithIdentifier:self.segue.MySegue sender:nil];
 ```
 ```
 -(void)prepareForSegue:( UIStoryboardSegue* )segue sender:( id )sender {
-   if ( [segue.identifier isEqual:self.segues.MySegue] );
+   if ( [segue.identifier isEqual:self.segue.MySegue] );
 }
 ```
-instead
+instead of
 ```
-[self performSegueWithIdentifier:@"MySegue" sender:nil]
+[self performSegueWithIdentifier:@"MySegue" sender:nil];
 ```
 ```
 -(void)prepareForSegue:( UIStoryboardSegue* )segue sender:( id )sender {
    if ( [segue.identifier isEqual:@"MySegue"] );
 }
 ```
-* Gnerate string constant for TableViewCells with identifiers. You can use
+* Gnerate string constant for TableViewCells with Identifiers. You can use
 ```
-[self.tableView dequeueReusableCellWithIdentifier:self.cells.myTableViewCell];
+[self.tableView dequeueReusableCellWithIdentifier:self.cell.myTableViewCell];
 ```
-instead
+instead of
 ```
 [self.tableView dequeueReusableCellWithIdentifier:@"myTableViewCell"];
 ```
@@ -52,3 +52,5 @@ Then insert sctipt:
 ```bash 
 ssgenerator -s Path/To/Storyboard.storyboard
 ```
+
+Now use CMD+B shortcut to build your app. Add generated files to your project. By default file names is <Storyboard>Segue.h and <Storyboard>Segue.m

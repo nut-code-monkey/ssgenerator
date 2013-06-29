@@ -91,7 +91,7 @@ didStartElement:(NSString *)elementName
         SSGController* controller = [self.controllersStack lastObject];
         if ( controller )
         {
-            [controller.segues addObject:attributeDict[@"identifier"]];
+            [controller.segue addObject:attributeDict[@"identifier"]];
         }
     }
     
@@ -99,7 +99,7 @@ didStartElement:(NSString *)elementName
     {
         SSGController* controller = [self.controllersStack lastObject];
         
-        [controller.cells addObject:attributeDict[@"reuseIdentifier"]];
+        [controller.cell addObject:attributeDict[@"reuseIdentifier"]];
     }
 }
 

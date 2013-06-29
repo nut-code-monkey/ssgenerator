@@ -42,66 +42,66 @@
 
 #pragma mark - Lines for *.h file
 
--(NSString*)seguesForControllerH:( SSGController* )controller
+-(NSString*)segueForControllerH:( SSGController* )controller
 {
-    NSString* controllerSeguesType = [NSString stringWithFormat:@"%@StoryboardSegues", [self controllerClass:controller]];
+    NSString* controllerSegueType = [NSString stringWithFormat:@"%@StoryboardSegue", [self controllerClass:controller]];
 
-    NSMutableArray* segueLines = [NSMutableArray arrayWithCapacity:controller.segues.count];
-    for ( NSString* segue in controller.segues )
+    NSMutableArray* segueLines = [NSMutableArray arrayWithCapacity:controller.segue.count];
+    for ( NSString* segue in controller.segue )
         [segueLines addObject:[NSString stringWithFormat:@"   __unsafe_unretained NSString* %@;", segue]];
     
-    id seguesTypedef = [NSString stringWithFormat:@""
+    id segueTypedef = [NSString stringWithFormat:@""
                       "extern const struct %@ {\n"
                       "%@\n"
                       "} %@ ;\n"
-                      , controllerSeguesType
+                      , controllerSegueType
                       , [segueLines componentsJoinedByString:@"\n"]
-                      , controllerSeguesType];
+                      , controllerSegueType];
 
     id category = [NSString stringWithFormat:@"\n"
-                           "@interface %@ ( StoryboardSegues )\n"
+                           "@interface %@ ( StoryboardSegue )\n"
                            "\n"
-                           "@property (assign, nonatomic, readonly) struct %@ segues;\n"
+                           "@property (assign, nonatomic, readonly) struct %@ segue;\n"
                            "\n"
-                           "+(struct %@)segues;\n"
+                           "+(struct %@)segue;\n"
                            "\n"
                            @"@end\n\n\n"
                            , [self controllerClass:controller]
-                           , controllerSeguesType
-                           , controllerSeguesType];
+                           , controllerSegueType
+                           , controllerSegueType];
 
-    return [@[seguesTypedef, category] componentsJoinedByString:@"\n"];
+    return [@[segueTypedef, category] componentsJoinedByString:@"\n"];
 }
 
--(NSString*)cellsForControllerH:( SSGController* )controller
+-(NSString*)cellForControllerH:( SSGController* )controller
 {
-    NSString* controllerCellsType = [NSString stringWithFormat:@"%@StoryboardCells", [self controllerClass:controller]];
+    NSString* controllerCellType = [NSString stringWithFormat:@"%@StoryboardCell", [self controllerClass:controller]];
     
-    NSMutableArray* cellLines = [NSMutableArray arrayWithCapacity:controller.cells.count];
-    for ( NSString* cell in controller.cells )
+    NSMutableArray* cellLines = [NSMutableArray arrayWithCapacity:controller.cell.count];
+    for ( NSString* cell in controller.cell )
         [cellLines addObject:[NSString stringWithFormat:@"   __unsafe_unretained NSString* %@;", cell]];
     
-    id seguesTypedef = [NSString stringWithFormat:@""
+    id segueTypedef = [NSString stringWithFormat:@""
                         "extern const struct %@ {\n"
                         "%@\n"
                         "} %@ ;\n"
-                        , controllerCellsType
+                        , controllerCellType
                         , [cellLines componentsJoinedByString:@"\n"]
-                        , controllerCellsType];
+                        , controllerCellType];
     
     id category = [NSString stringWithFormat:@"\n"
-                   "@interface %@ ( StoryboardCells )\n"
+                   "@interface %@ ( StoryboardCell )\n"
                    "\n"
-                   "@property (assign, nonatomic, readonly) struct %@ cells;\n"
+                   "@property (assign, nonatomic, readonly) struct %@ cell;\n"
                    "\n"
-                   "+(struct %@)cells;\n"
+                   "+(struct %@)cell;\n"
                    "\n"
                    @"@end\n\n"
                    , [self controllerClass:controller]
-                   , controllerCellsType
-                   , controllerCellsType];
+                   , controllerCellType
+                   , controllerCellType];
     
-    return [@[seguesTypedef, category] componentsJoinedByString:@"\n"];
+    return [@[segueTypedef, category] componentsJoinedByString:@"\n"];
 }
 
 -(NSString*)constructorsForControllerH:( SSGController* )controller
@@ -127,19 +127,19 @@
     
     for ( SSGController* controller in self.controllers )
     {
-        if ( controller.customClass && ( controller.segues.count || controller.cells.count || controller.storyboardIdentifiers.count) )
+        if ( controller.customClass && ( controller.segue.count || controller.cell.count || controller.storyboardIdentifiers.count) )
         {
             [controllers addObject:[NSString stringWithFormat:@"#import \"%@.h\"\n\n", controller.customClass]];
         }
         
-        if ( controller.segues.count )
+        if ( controller.segue.count )
         {
-            [controllers addObject:[self seguesForControllerH:controller]];
+            [controllers addObject:[self segueForControllerH:controller]];
         }
         
-        if ( controller.cells.count )
+        if ( controller.cell.count )
         {
-            [controllers addObject:[self cellsForControllerH:controller]];
+            [controllers addObject:[self cellForControllerH:controller]];
         }
         
         if ( controller.storyboardIdentifiers.count )
@@ -161,74 +161,74 @@
 
 #pragma mark - Lines for *.m file
 
--(NSString*)seguesForControllerM:( SSGController* )controller
+-(NSString*)segueForControllerM:( SSGController* )controller
 {
-    NSString* controllerSeguesType = [NSString stringWithFormat:@"%@StoryboardSegues", [self controllerClass:controller]];
+    NSString* controllerSegueType = [NSString stringWithFormat:@"%@StoryboardSegue", [self controllerClass:controller]];
     
-    NSMutableArray* segueLines = [NSMutableArray arrayWithCapacity:controller.segues.count];
-    for ( NSString* segue in controller.segues )
+    NSMutableArray* segueLines = [NSMutableArray arrayWithCapacity:controller.segue.count];
+    for ( NSString* segue in controller.segue )
         [segueLines addObject:[NSString stringWithFormat:@"   .%@ = @\"%@\",", segue, segue]];
     
-    NSString* seguesTypedef = [NSString stringWithFormat:@"const struct %@ %@ = {\n"
+    NSString* segueTypedef = [NSString stringWithFormat:@"const struct %@ %@ = {\n"
                                "%@\n"
                                "};\n"
-                               , controllerSeguesType
-                               , controllerSeguesType
+                               , controllerSegueType
+                               , controllerSegueType
                                , [segueLines componentsJoinedByString:@"\n"]];
     
-    NSString* category = [NSString stringWithFormat:@"@implementation %@ ( StoryboardSegues )\n\n"
-                          "@dynamic segues;\n"
+    NSString* category = [NSString stringWithFormat:@"@implementation %@ ( StoryboardSegue )\n\n"
+                          "@dynamic segue;\n"
                           "\n"
-                          "+(struct %@)segues {\n"
+                          "+(struct %@)segue {\n"
                           "   return %@;\n"
                           "}\n"
                           "\n"
                           "-(struct %@)segue {\n"
-                          "   return [self.class segues];\n"
+                          "   return [self.class segue];\n"
                           "}\n"
                           "\n"
                           "@end\n\n"
                           , [self controllerClass:controller]
-                          , controllerSeguesType
-                          , controllerSeguesType
-                          , controllerSeguesType];
+                          , controllerSegueType
+                          , controllerSegueType
+                          , controllerSegueType];
 
-    return [@[seguesTypedef ,category] componentsJoinedByString:@"\n\n"];
+    return [@[segueTypedef ,category] componentsJoinedByString:@"\n\n"];
 }
 
--(NSString*)cellsForControllerM:( SSGController* )controller
+-(NSString*)cellForControllerM:( SSGController* )controller
 {
-    NSString* controllerCellsType = [NSString stringWithFormat:@"%@StoryboardCells", [self controllerClass:controller]];
+    NSString* controllerCellType = [NSString stringWithFormat:@"%@StoryboardCell", [self controllerClass:controller]];
     
-    NSMutableArray* cellsLines = [NSMutableArray arrayWithCapacity:controller.cells.count];
-    for ( NSString* cell in controller.cells )
-        [cellsLines addObject:[NSString stringWithFormat:@"   .%@ = @\"%@\",", cell, cell]];
+    NSMutableArray* cellLines = [NSMutableArray arrayWithCapacity:controller.cell.count];
+    for ( NSString* cell in controller.cell )
+        [cellLines addObject:[NSString stringWithFormat:@"   .%@ = @\"%@\",", cell, cell]];
     
-    NSString* seguesTypedef = [NSString stringWithFormat:@"const struct %@ %@ = {\n"
+    NSString* cellTypedef = [NSString stringWithFormat:@"const struct %@ %@ = {\n"
                                "%@\n"
                                "};\n"
-                               , controllerCellsType
-                               , controllerCellsType
-                               , [cellsLines componentsJoinedByString:@"\n"]];
+                               , controllerCellType
+                               , controllerCellType
+                               , [cellLines componentsJoinedByString:@"\n"]];
     
-    NSString* category = [NSString stringWithFormat:@"@implementation %@ ( StoryboardCells )\n\n"
-                          "@dynamic cells;\n"
+    NSString* category = [NSString stringWithFormat:@"@implementation %@ ( StoryboardCell )\n\n"
+                          "@dynamic cell;\n"
                           "\n"
-                          "+(struct %@)cells {\n"
+                          "+(struct %@)cell {\n"
                           "   return %@;\n"
                           "}\n"
                           "\n"
-                          "-(struct %@)cells {\n"
-                          "   return [self.class cells];\n"
+                          "-(struct %@)cell {\n"
+                          "   return [self.class cell];\n"
                           "}\n"
                           "\n"
                           "@end\n\n"
                           , [self controllerClass:controller]
-                          , controllerCellsType
-                          , controllerCellsType
-                          , controllerCellsType];
+                          , controllerCellType
+                          , controllerCellType
+                          , controllerCellType];
 
-    return [@[seguesTypedef ,category] componentsJoinedByString:@"\n\n"];
+    return [@[cellTypedef ,category] componentsJoinedByString:@"\n\n"];
 }
 
 -(NSString*)constructorsForControllerM:( SSGController* )controller
@@ -261,14 +261,14 @@
     NSMutableArray* controllers = [NSMutableArray arrayWithObject:header];
     for (SSGController* controller in self.controllers)
     {
-        if ( controller.segues.count )
+        if ( controller.segue.count )
         {
-            [controllers addObject:[self seguesForControllerM:controller]];
+            [controllers addObject:[self segueForControllerM:controller]];
         }
         
-        if ( controller.cells.count )
+        if ( controller.cell.count )
         {
-            [controllers addObject:[self cellsForControllerM:controller]];
+            [controllers addObject:[self cellForControllerM:controller]];
         }
         
         if ( controller.storyboardIdentifiers.count )

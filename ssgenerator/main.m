@@ -58,7 +58,7 @@ int main(int argc, const char * argv[])
         
         NSString* storyboardName = [[storyboardPath lastPathComponent] stringByDeletingPathExtension];
         
-        NSString* defauldOutputFilename = [storyboardName stringByAppendingString:@"Segues"];
+        NSString* defauldOutputFilename = [storyboardName stringByAppendingString:@"Segue"];
 
         id defaultOutput = [[storyboardPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:defauldOutputFilename];
         id outputPath = firstNotNilParameter(firstNotNilParameter(args[@"o"], args[@"output"]), defaultOutput);
