@@ -29,7 +29,7 @@ int main(int argc, const char * argv[])
             
             printf("usage:\n");
             printf("   %s -s <storyboard-name> [-o <output_filename>]\n\n", appName);
-            printf("   %s -storyboard <storyboard-name> [-output <output_filename>]\n", appName);
+            printf("   %s -storyboard <storyboard-name> [-output <output_filename>] [-p | -prefix [UI | NS]]\n", appName);
         };
         
         if ( arguments.count == 1 ) // no params
@@ -53,6 +53,13 @@ int main(int argc, const char * argv[])
             printHelp();
             return EXIT_FAILURE;
         }
+        
+        NSString* prefix = firstNotNilParameter(args[@"p"], args[@"prefix"]);
+        if (prefix && ![prefix isEqual:@"UI"] && [prefix isEqual:@"NS"] )
+        {
+            printf("-prefix must be UI or NS");
+            return EXIT_FAILURE;
+        }
     
         NSString* storyboardPath = [[NSURL fileURLWithPath:storyboard] relativePath];
         
@@ -74,6 +81,8 @@ int main(int argc, const char * argv[])
         
         SSGenerator* generator = [SSGenerator generatorForStoryboard:[storyboardPath lastPathComponent] 
                                                          controllers:parser.controllers];
+        
+        generator.controllerPrefix = firstNotNilParameter(prefix, @"UI");
         
         error = [generator writeH:outputPath];
         if ( error )

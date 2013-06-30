@@ -10,7 +10,7 @@
 
 @interface SSGenerator : NSObject
 
-@property (strong, nonatomic) NSString* defaultControllerClass;
+@property (strong, nonatomic) NSString* controllerPrefix;
 
 +(instancetype)generatorForStoryboard:( NSString* )storyboard controllers:( NSArray* )controllers;
 

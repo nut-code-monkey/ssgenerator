@@ -24,7 +24,6 @@
     if ( self )
     {
         self.controllers = controllers;
-        self.defaultControllerClass = @"UIViewController";
         self.storyboard = storyboard;
     }
     return self;
@@ -32,7 +31,7 @@
 
 -(NSString*)controllerClass:( SSGController* )controller
 {
-    return controller.customClass ? controller.customClass : self.defaultControllerClass;
+    return controller.customClass ? controller.customClass : [NSString stringWithFormat:@"%@ViewController", self.controllerPrefix];
 }
 
 +(instancetype)generatorForStoryboard:( NSString* )storyboard controllers:( NSArray* )controllers
