@@ -41,7 +41,7 @@ Download [ssgenerator.pkg](https://bitbucket.org/nut_code_monkey/ssgenerator/dow
 Prepare Project
 ---------------
 
-Go to Troject -> Targets -> Add Build Phase -> Add Run Script:
+Go to Project -> Targets -> Add Build Phase -> Add Run Script:
 
 ![Add run script](https://bitbucket.org/nut_code_monkey/ssgenerator/downloads/add_run_script.png "Add run script")
 
