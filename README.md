@@ -1,5 +1,5 @@
-Storyboard segue generator
-==========================
+generatorss - Storyboard segue generator
+========================================
 
 * Generate string constant for any segue with identifier and now you can use
 ```

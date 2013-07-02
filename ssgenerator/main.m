@@ -28,8 +28,8 @@ int main(int argc, const char * argv[])
             const char* appName = [[appUrl lastPathComponent] cStringUsingEncoding:NSUTF8StringEncoding];
             
             printf("usage:\n");
-            printf("   %s -s <storyboard-name> [-o <output_filename>]\n\n", appName);
-            printf("   %s -storyboard <storyboard-name> [-output <output_filename>] [-p | -prefix [UI | NS]]\n", appName);
+            printf("   %s -s <storyboard-name> [-o <output-filename>]\n\n", appName);
+            printf("   %s -storyboard <storyboard-name> [-output <output-filename>] [-p | -prefix [UI | NS]]\n", appName);
         };
         
         if ( arguments.count == 1 ) // no params

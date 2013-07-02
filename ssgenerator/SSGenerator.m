@@ -127,34 +127,23 @@
     for ( SSGController* controller in self.controllers )
     {
         if ( controller.customClass && ( controller.segue.count || controller.cell.count || controller.storyboardIdentifiers.count) )
-        {
             [controllers addObject:[NSString stringWithFormat:@"#import \"%@.h\"\n\n", controller.customClass]];
-        }
         
         if ( controller.segue.count )
-        {
             [controllers addObject:[self segueForControllerH:controller]];
-        }
         
         if ( controller.cell.count )
-        {
             [controllers addObject:[self cellForControllerH:controller]];
-        }
         
         if ( controller.storyboardIdentifiers.count )
-        {
             [controllers addObject:[self constructorsForControllerH:controller]];
-        }
     }
-
-    NSString* hFile = [controllers componentsJoinedByString:@"\n\n"];
     
     NSError* error = nil;
-    [hFile writeToFile:[file stringByAppendingString:@".h"]
-            atomically:YES
-              encoding:NSUTF8StringEncoding
-                 error:&error];
-
+    [[controllers componentsJoinedByString:@"\n\n"] writeToFile:[file stringByAppendingString:@".h"]
+                                                     atomically:YES
+                                                       encoding:NSUTF8StringEncoding
+                                                          error:&error];
     return error;
 }
 
@@ -261,29 +250,20 @@
     for (SSGController* controller in self.controllers)
     {
         if ( controller.segue.count )
-        {
             [controllers addObject:[self segueForControllerM:controller]];
-        }
         
         if ( controller.cell.count )
-        {
             [controllers addObject:[self cellForControllerM:controller]];
-        }
         
         if ( controller.storyboardIdentifiers.count )
-        {
             [controllers addObject:[self constructorsForControllerM:controller]];
-        }
     }
 
-    NSString* mFile = [controllers componentsJoinedByString:@"\n\n"];
-    
     NSError* error = nil;
-    [mFile writeToFile:[file stringByAppendingString:@".m"]
-            atomically:YES
-              encoding:NSUTF8StringEncoding
-                 error:&error];
-    
+    [[controllers componentsJoinedByString:@"\n\n"] writeToFile:[file stringByAppendingString:@".m"]
+                                                     atomically:YES
+                                                       encoding:NSUTF8StringEncoding
+                                                          error:&error];
     return error;
 }
 
