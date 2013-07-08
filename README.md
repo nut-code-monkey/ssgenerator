@@ -19,7 +19,7 @@ instead of
    if ( [segue.identifier isEqual:@"MySegue"] );
 }
 ```
-* Gnerate string constant for TableViewCells with Identifiers. You can use
+* Generate string constant for TableViewCells with Identifiers. You can use
 ```
 [self.tableView dequeueReusableCellWithIdentifier:self.cell.myTableViewCell];
 ```
