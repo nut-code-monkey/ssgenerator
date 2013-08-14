@@ -67,8 +67,8 @@ int main(int argc, const char * argv[])
         
         NSString* defauldOutputFilename = [storyboardName stringByAppendingString:@"Segue"];
 
-        id defaultOutput = [[storyboardPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:defauldOutputFilename];
-        id outputPath = firstNotNilParameter(firstNotNilParameter(args[@"o"], args[@"output"]), defaultOutput);
+        NSString* defaultOutput = [[storyboardPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:defauldOutputFilename];
+        NSString* outputPath = firstNotNilParameter(firstNotNilParameter(args[@"o"], args[@"output"]), defaultOutput);
         
         NSError* error = nil;
         SSGParser* parser = [SSGParser parserForStoryboard:storyboardPath error:&error];
